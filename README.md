@@ -1,6 +1,6 @@
 # 8_RGB_house_number
 
-3D printed a new RGB LED house number which will be controlled using a NodeMCU ESP8266 board as a webserver.
+3D printed an RGB LED house number which will be controlled using a NodeMCU ESP8266 board as a webserver.
 
 The #8 house number with the black cover on top.
 ![image](https://github.com/lucasrathgeb/8_RGB_house_number/assets/121773312/47b69db3-dcc1-4e35-a301-6a1ffcca79de)
