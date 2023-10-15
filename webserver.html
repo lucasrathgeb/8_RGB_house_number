@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html><head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="icon" href="data:,"> 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js">
+</script>
+<style>
+    th, td {
+        padding: 10px;
+    }
+</style>
+</head>
+<body onload="getColour()"> 
+<div class="container">
+<div class="row"> 
+<h1>#8 Colour Control</h1>
+</div> 
+<p>Colour Options
+<select name="Color Options" id="color_type">
+    <option value="sing">Single Colour</option>
+    <option value="dual">Dual Colour</option>
+    <option value="tric">Tri Colour</option>
+    <option value="whit">White</option>
+  </select>
+</p>
+<p>Function Options
+    <select name="Function Options" id="func_type">
+        <option value="fill">Fill</option>
+        <option value="anim">Animate (Experimental)</option>
+        <option value="puls">Pulse (Experimental)</option>
+        <option value="rain">Rainbow</option>
+      </select>
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Colours</th>
+            <th>Colour Selection</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+    </tbody>
+</table>
+</div>
+<div class="container"> 
+    <a class="btn btn-primary btn-lg" href="#" id="updatebutton" role="button" onclick="update()">GO</a> 
+<div> 
+<div>
+
+</div>
+<script>
+    function updateTable() {
+        const num_colors = document.getElementById('color_type').value;
+        var rowCount = 0;
+        if(num_colors === "sing"){
+            rowCount = 1;
+        }
+        else if (num_colors === "dual"){
+            rowCount = 2;
+        }
+        else if (num_colors === "tric"){
+            rowCount = 3;
+        }
+        else if (num_colors === "whit"){
+            rowCount = 1;
+        }
+        else{
+            rowCount = 2;
+        }
+
+        tableBody = document.getElementById('tableBody');
+
+        tableBody.innerHTML = '';
+
+        for (let i = 0; i < rowCount; i++) {
+            row = document.createElement('tr');
+            cell1 = document.createElement('td');
+            cell2 = document.createElement('td');
+
+            cell1.textContent = "Colour " + String(i+1);
+            colorInput = document.createElement('input');
+            colorInput.setAttribute('class', 'jscolor');
+            colorInput.setAttribute('id', 'rgb' + String(i));
+            cell2.appendChild(colorInput);
+
+            row.appendChild(cell1);
+            row.appendChild(cell2);
+
+            tableBody.appendChild(row);
+        }
+        jscolor.installByClassName('jscolor');
+    }
+
+    document.getElementById('color_type').addEventListener('change', updateTable);
+
+    updateTable();
+</script>
+<script>
+    function getPickerColour(picker){
+        console.log(Math.round(picker.rgb[0]) + ', ' + Math.round(picker.rgb[1]) + ', ' + Math.round(picker.rgb[2]));
+        return Math.round(picker.rgb[0]) + ', ' + Math.round(picker.rgb[1]) + ', ' + Math.round(picker.rgb[2]);
+    }
+</script>
+
+<script>
+    function getColourCodeURLFromPicker(picker){
+        return Math.round(picker.rgb[0]) + "g" + Math.round(picker.rgb[1]) + "b" + Math.round(picker.rgb[2]) + "&"; 
+    }
+</script>
+<script>
+    function update() {
+        picker0 = document.getElementById('rgb0').jscolor;
+        picker0.innerHTML = getPickerColour(picker0);
+        rgb0_url = "?LED0r" + getColourCodeURLFromPicker(picker0) ;
+
+        if(document.getElementById('rgb1') != null){
+            picker1 = document.getElementById('rgb1').jscolor;
+            picker1.innerHTML = getPickerColour(picker1);
+            rgb1_url = "LED1r" + getColourCodeURLFromPicker(picker1);
+        }
+        else{
+            rgb1_url = "LED1r0b0g0&"
+        }
+
+        if(document.getElementById('rgb2') != null){
+            picker2 = document.getElementById('rgb2').jscolor;
+            picker2.innerHTML = getPickerColour(picker2);
+            rgb2_url = "LED2r" + getColourCodeURLFromPicker(picker2);
+        }
+        else{
+            rgb2_url = "LED2r0b0g0&";
+        }
+
+        colour_type = "c" + document.getElementById('color_type').value;
+        func_type =  "+" + document.getElementById('func_type').value;
+
+        new_url = rgb0_url + rgb1_url + rgb2_url + colour_type + func_type;
+
+        document.getElementById("updatebutton").href = new_url;
+        
+     } 
+</script> 
+<script>
+    function getRGBFromURL(led_num){
+        console.log(led_num);
+        pos1 = url.indexOf("LED" + String(led_num))+1; 
+        console.log("LED" + String(led_num));
+        pos2 = url.indexOf("&",pos1); 
+        current_colour = url.substring(pos1,pos2); 
+        posr = current_colour.indexOf("r"); 
+        posg = current_colour.indexOf("g"); 
+        posb = current_colour.indexOf("b"); 
+        redval = current_colour.substring(posr+1,posg); 
+        blueval = current_colour.substring(posg+1,posb); 
+        greenval = current_colour.substring(posb+1);
+
+        rgb_string = "rgb(" + redval + ", " + blueval + "," + greenval + ")";
+
+        return rgb_string;
+    }
+</script>
+<script>
+    function getColourType(url){
+        if(url.indexOf("&c")>=0){
+            pos1 = url.indexOf("&c") + 2;
+            pos2 = pos1 + 4;
+            color_func_type = url.substring(pos1,pos2);
+            console.log(color_func_type);
+        }
+        else{
+            color_func_type = "null"
+        }
+        return color_func_type;
+    }
+</script>
+<script>
+    function getFuncType(url){
+        if(url.indexOf("+")>=0){
+            pos1 = url.indexOf("+") + 1;
+            pos2 = pos1 + 4;
+            func_type = url.substring(pos1,pos2);
+            console.log(func_type);
+        }
+        else{
+            func_type = "null"
+        }
+        return func_type;
+    }
+</script>
+<script> 
+    function getColour(){ 
+        url = window.location.href; 
+        document.getElementById('color_type').value = getColourType(url);
+        document.getElementById('func_type').value = getFuncType(url);
+        updateTable();
+	    if(url.indexOf("?LED0")>=0){ 
+            document.getElementById('rgb0').jscolor.fromString(getRGBFromURL(0));
+            if(document.getElementById('rgb1') != null){
+                document.getElementById('rgb1').jscolor.fromString(getRGBFromURL(1));
+                
+            }
+
+            if(document.getElementById('rgb2') != null){
+                document.getElementById('rgb2').jscolor.fromString(getRGBFromURL(2));
+                
+            }
+        }
+
+    }
+</script>
+
+</body>
+</html>

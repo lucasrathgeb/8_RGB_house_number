@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Table</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js">
+    </script> 
+</head>
+
+<body>
+    <h1>Dynamic Table</h1>
+    
+    <!-- Dropdown selector for the number of rows -->
+    <label for="rowCount">Select number of rows:</label>
+    <select id="rowCount">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+
+    <!-- Table to display rows -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Table rows will be added here dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        // Function to update the table based on the selected number of rows
+        function updateTable() {
+            // Get the selected number of rows from the dropdown
+            const rowCount = parseInt(document.getElementById('rowCount').value);
+
+            // Get the table body element
+            const tableBody = document.getElementById('tableBody');
+
+            // Clear existing table rows
+            tableBody.innerHTML = '';
+
+            // Create and append new rows based on the selected count
+            for (let i = 0; i < rowCount; i++) {
+                const row = document.createElement('tr');
+                const cell1 = document.createElement('td');
+                const cell2 = document.createElement('td');
+
+                // Set content for each cell (you can customize this)
+                cell1.textContent = "Color " + String(i+1)
+                // colorInput1.setAttribute('autocomplete','off')
+                const colorInput = document.createElement('input');
+                colorInput.setAttribute('class', 'jscolor');
+                colorInput.setAttribute('id', 'rgb' + String(i));
+                // Append the jscolor input elements to the cells
+                // cell1.appendChild(colorInput1);
+                cell2.appendChild(colorInput);
+
+                row.appendChild(cell1);
+                row.appendChild(cell2);
+
+                tableBody.appendChild(row);
+            }
+            jscolor.installByClassName('jscolor');
+        }
+
+        // Add an event listener to the dropdown to update the table when it changes
+        document.getElementById('rowCount').addEventListener('change', updateTable);
+
+        // Initialize the table with the default selection (1 row)
+        updateTable();
+    </script>
+</body>
+</html>
