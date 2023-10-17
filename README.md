@@ -12,7 +12,8 @@ View from another angle.
 ![image](https://github.com/lucasrathgeb/8_RGB_house_number/assets/121773312/d56b3d8e-79aa-4eed-aa7b-503a467d2899)
 
 What the RGB control webpage looks like using jscolor elements for colour selection.
-![image](https://github.com/lucasrathgeb/8_RGB_house_number/assets/121773312/b079df56-8e5c-4b6d-b5c5-04e28e680b34)
+![image](https://github.com/lucasrathgeb/8_RGB_house_number/assets/121773312/77d1bbf6-7ab5-40a4-b34b-d2586af09a78)
+
 
 
 
