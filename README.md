@@ -14,6 +14,10 @@ View from another angle.
 What the RGB control webpage looks like using jscolor elements for colour selection.
 ![image](https://github.com/lucasrathgeb/8_RGB_house_number/assets/121773312/77d1bbf6-7ab5-40a4-b34b-d2586af09a78)
 
+The 3d printed house number and control electronics
+![IMG_0132](https://github.com/lucasrathgeb/8_RGB_house_number/assets/121773312/8da150ee-97e7-45b2-bac3-d7ae30f16456)
 
+View of the RGB LEDs wired together and inlayed into the 3D printed light guide
+![IMG_0133](https://github.com/lucasrathgeb/8_RGB_house_number/assets/121773312/78e0b55a-9148-4def-9dd4-287bb5d0b7c7)
 
 
